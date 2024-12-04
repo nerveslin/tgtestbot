@@ -1,5 +1,4 @@
 import sqlite3
-##datetime timestamp
 
 
 connection = sqlite3.connect('tgtasks.db')
@@ -57,8 +56,6 @@ def get_task(task_id:int):
     else:
         print(f"No task found with ID {task_id}.")
 
-#add_task("Finish the report", completed=False, time=120)
-
 
 def list_tasks():
     taskdb = sqlite3.connect('tgtasks.db')
@@ -69,18 +66,6 @@ def list_tasks():
 
     taskdb.close()
     return tasks_list
-
-    # if tasks_list:
-    #     result = " "
-    #     print("Tasks in the database:")
-    #     for task in tasks_list:
-    #         task_id, task_name, completed, time = task
-    #         result = f"ID: '{task_id}', Name: '{task_name}', Completed: '{completed}', Time: '{time}'"
-    #         print(result)
-    #     else:
-    #         result = "No more tasks found."
-    #     return result
-
 
 def delete_task(task_id: int):
     taskdb = sqlite3.connect('tgtasks.db')
@@ -105,46 +90,3 @@ def delete_all():
     taskdb.close()
 
     print("All tasks have been deleted successfully")
-
-
-# add_task("Finish the report", completed=False, time=120)
-# get_task(1)
-
-# async def add_to_database(telegram_id, username):
-#     async with sqlite3.connect('tg.db') as db:
-#         await db.execute("CREATE TABLE IF NOT EXISTS users "
-#                          "(telegram_id BIGINT, "
-#                          "username VARCHAR(255))")
-#         cursor = await db.execute("SELECT * FROM users WHERE telegram_id = ?",
-#                                   (telegram_id,))
-#         data = await cursor.fetchone()
-#         if data is not None:
-#             return
-#     async with sqlite3.connect('tg.db') as db:
-#         await db.execute("INSERT INTO users (telegram_id, username) VALUES (?, ?)",
-#                          (telegram_id, username))
-#         await db.commit()
-
-
-# async def add_task_to_database(task_name):
-#     async with sqlite3.connect('tgtasks.db') as taskdb:
-#         await taskdb.execute("CREATE TABLE IF NOT EXISTS tasks ("
-#                              "task_id INTEGER PRIMARY KEY AUTOINCREMENT,"
-#                              "task_name VARCHAR(500),"
-#                              "completed BOOLEAN DEFAULT FALSE,"
-#                              "time INTEGER ")
-#         await taskdb.commit()
-#         cursor = await taskdb.execute("SELECT * FROM tasks WHERE task_name = ?",
-#                                       (task_name,))
-#         async with sqlite3.connect('tgtasks.db') as taskdb:
-#             data = await cursor.fetchone()
-#
-#             await taskdb.execute("INSERT INTO tasks (task_id, task_name, completed) VALUES (?, ?, ?)",
-#                                  task_name)
-#             await taskdb.commit()
-#
-#         async with sqlite3.connect('tgtasks.db') as taskdb:
-#             cursor = await taskdb.execute("SELECT * FROM tasks WHERE task_name = ?",
-#                                           (task_name,))
-#             data = await cursor.fetchone()
-#             print(data)
