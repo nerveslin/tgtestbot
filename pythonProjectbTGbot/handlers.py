@@ -1,6 +1,6 @@
 from aiogram import F, Bot, Router, types
 from aiogram.types import Message, CallbackQuery
-from aiogram.filters import CommandStart, Command
+from aiogram.filters import CommandStart, Command  # убираем не использованные импорты
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 
@@ -22,9 +22,11 @@ class RegisterTask(StatesGroup):
 
 @router.message(CommandStart())
 async def start_command(message: types.Message, state: FSMContext):
-    await message.answer(f'Welcome, {message.from_user.first_name}!\nYour ID is {message.from_user.id}.'
-                         f'Choose what to do:',
-                         reply_markup=kb.main)
+    await message.answer(
+        f"Welcome, {message.from_user.first_name}!\nYour ID is {message.from_user.id}."
+        f"Choose what to do:",
+        reply_markup=kb.main,
+    )
     await state.set_state(RegisterTask.task_menu)
 
 
@@ -56,7 +58,9 @@ async def list_tasks_handler(callback_query: types.CallbackQuery):
     for task in tasks:
         task_id, task_name, completed, time = task
         status = "Yes" if completed else "No"
-        response = f"ID: {task_id}, Name: {task_name}, Completed: {status}, Time: {time}"
+        response = (
+            f"ID: {task_id}, Name: {task_name}, Completed: {status}, Time: {time}"
+        )
         await callback_query.message.answer(response)
     await callback_query.message.answer("No more tasks in the database")
 
