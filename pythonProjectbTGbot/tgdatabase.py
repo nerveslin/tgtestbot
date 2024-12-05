@@ -8,8 +8,7 @@ cursor = connection.cursor()
 cursor.execute("CREATE TABLE IF NOT EXISTS tasks "
                "(task_id INTEGER PRIMARY KEY AUTOINCREMENT,"
                "task_name VARCHAR(500),"
-               "completed BOOLEAN DEFAULT FALSE,"
-               "time INTEGER)")
+               "completed BOOLEAN DEFAULT FALSE")
 
 connection.commit()
 
@@ -20,8 +19,8 @@ def add_task(task_name: str, completed: bool = False, time: int = 0):
     taskdb = sqlite3.connect('tgtasks.db')
     task_cursor = taskdb.cursor()
 
-    task_cursor.execute("INSERT INTO tasks (task_name, completed, time) "
-                        "VALUES (?, ?, ?)",
+    task_cursor.execute("INSERT INTO tasks (task_name, completed) "
+                        "VALUES (?, ?)",
                         (task_name, completed, time))
 
     taskdb.commit()
@@ -52,9 +51,10 @@ def get_task(task_id:int):
 
     if taskone:
         task_id, task_name, completed, time = taskone
-        print(f"ID: {task_id}, Name: {task_name}, Completed: {completed}, Time: {time}")
+        print(f"ID: {task_id}, Name: {task_name}, Completed: {completed}")
     else:
         print(f"No task found with ID {task_id}.")
+
 
 
 def list_tasks():
@@ -66,6 +66,7 @@ def list_tasks():
 
     taskdb.close()
     return tasks_list
+
 
 def delete_task(task_id: int):
     taskdb = sqlite3.connect('tgtasks.db')
