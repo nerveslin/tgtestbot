@@ -6,7 +6,7 @@ from aiogram.fsm.context import FSMContext
 
 import keyboards as kb
 
-from config import TOKEN
+from tgtestbot.pythonProjectbTGbot.core.config import TOKEN
 
 from tgdatabase import add_task, complete_task, delete_task, list_tasks
 
